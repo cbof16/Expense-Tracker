@@ -1,10 +1,9 @@
 import React,{useContext} from 'react'
 import { GlobalContext } from '../context/GlobalState'
-
+import Transaction from './Transaction'
 
 const TransactionList = () => {
     const {transactions}=useContext(GlobalContext);
-    
     
     
     //The useContext hook in React
@@ -18,7 +17,7 @@ const TransactionList = () => {
     <h3>History</h3>
       <ul id="list" class="list">
         {transactions.map(transaction=>(
-            <li class={transaction.amount<0?'minus':'plus'}>{transaction.text} <span>{transaction.amount}</span><button class="delete-btn">x</button></li>
+           <Transaction key={transaction.id} transaction={transaction}/>
         ))}
       </ul>
     </>
