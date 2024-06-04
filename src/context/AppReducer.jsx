@@ -4,6 +4,9 @@ export default (state, action) => {
             return {
                 ...state,
                 transactions: state.transactions.filter(transaction => transaction.id !== action.payload)
+                // payload is the data that we want to send to the reduce
+                // filter() method creates a new array with all elements that pass the test implemented by the provided function.
+                // In this case, we are filtering out the transaction with the id that matches the payload
             }
         case 'ADD_TRANSACTION':
             return {
@@ -15,17 +18,3 @@ export default (state, action) => {
     }
 }
 
-// // Actions
-    // function deleteTransaction(id){
-    //     dispatch({
-    //         type: 'DELETE_TRANSACTION',
-    //         payload: id
-    //     });
-    // }
-
-    // function addTransaction(transaction){
-    //     dispatch({
-    //         type: 'ADD_TRANSACTION',
-    //         payload: transaction
-    //     });
-    // }

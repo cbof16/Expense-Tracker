@@ -1,7 +1,8 @@
-import React,{ useState } from 'react'
-
+import React,{ useState,useContext} from 'react'
+import { GlobalContext } from '../context/GlobalState';
 
 const NewTransaction = () => {
+    const {addTransaction}=useContext(GlobalContext);
     const [formData, setFormData] = useState(
         {
             text: '',
@@ -20,21 +21,27 @@ const NewTransaction = () => {
         setFormData({...formData,[name]:value})
     }
     const handleSubmit=(e)=>{
-        if(!validateForm()){
-            alert("Please Enter all the fields")
-            return;
-        }
         e.preventDefault()
-        localStorage.setItem('formData',JSON.stringify(formData))
-        console.log("formsubmitted:",formData);
-        setFormData({text:'',amount:0})
+        addTransaction({
+            id:Math.floor(Math.random()*100000000),
+            text:formData.text,
+            amount:parseInt(formData.amount)
+            //or amount:+formData.amount both are same
+        })
+        setFormData({
+            text:'',
+            amount:0
+        })
+         // to add data to the global state
+        // localStorage.setItem('formData',JSON.stringify(formData)) // to store data in local storage
+        // console.log("formsubmitted:",formData);
     }
 
 
   return (
     <div>
         <h3>Add New Transaction</h3>
-        <form className='form-control'>
+        <form className='form-control' onSubmit={handleSubmit}>
             <div>
             <label>Text<br />
             <input type="text" name="text" value={formData.text} placeholder="Text" onChange={handlechange}/>
@@ -46,8 +53,8 @@ const NewTransaction = () => {
             <input type="number" name="amount" value={formData.amount}  placeholder="Enter Amount" onChange={handlechange}/>
             </label>
             </div>
+            <button className="btn"  type='submit' >Add Transaction</button>
         </form>
-        <button className="btn" onClick={handleSubmit}>Add Transaction</button>
         
     </div>
   )
